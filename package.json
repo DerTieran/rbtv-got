@@ -1,6 +1,6 @@
 {
   "name": "rbtv-got",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Convenience wrapper for `got` to interact with the RBTV API",
   "license": "MIT",
   "repository": "DerTieran/rbtv-got",
