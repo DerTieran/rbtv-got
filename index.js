@@ -27,7 +27,7 @@ const rbtvGot = function (path, opts) {
 
   opts.headers = Object.assign({
     authorization: 'WSSE profile="UsernameToken"',
-    'user-agent': 'https://github.com/dertieran/rbtv-got'
+    'user-agent': 'https://github.com/DerTieran/rbtv-got'
   }, opts.headers);
 
   if (opts.key && opts.secret) {

@@ -36,7 +36,7 @@ You can do:
 ```js
 const rbtvGot = require('rbtv-got');
 
-ghGot('podcast', {key: 'foo', secret: 'bar'}).then(res => {
+rbtvGot('podcast', {key: 'foo', secret: 'bar'}).then(res => {
   console.log(res.body.podcasts);
   //=> [...]
 });
@@ -47,7 +47,7 @@ Or:
 ```js
 const rbtvGot = require('rbtv-got');
 
-ghGot('http://api.rocketmgmt.de/podcast', {key: 'foo', secret: 'bar'}).then(res => {
+rbtvGot('http://api.rocketmgmt.de/podcast', {key: 'foo', secret: 'bar'}).then(res => {
   console.log(res.body.podcasts);
   //=> [...]
 });
