@@ -1,4 +1,4 @@
-# rbtv-got [![Build Status](https://travis-ci.org/dertieran/rbtv-got.svg?branch=master)](https://travis-ci.org/dertieran/rbtv-got)
+# rbtv-got [![Build Status](https://api.travis-ci.org/DerTieran/rbtv-got.svg?branch=master)](https://travis-ci.org/DerTieran/rbtv-got)
 
 > Convenience wrapper for [`got`](https://github.com/sindresorhus/got) to interact with the [RBTV API](https://dertieran.github.io/RocketBeansAPI/)
 
@@ -76,4 +76,4 @@ Can be set globally with the `RBTV_SECRET` environment variable.
 
 ## License
 
-[MIT](https://github.com/dertieran/rbtv-got/blob/master/license)
+[MIT](https://github.com/DerTieran/rbtv-got/blob/master/license)
