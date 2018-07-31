@@ -17,12 +17,10 @@ const rbtvGot = function (path, opts) {
     return Promise.reject(new TypeError(`Expected \`path\` to be a string, got ${typeof path}`));
   }
 
-  const env = process.env;
-
   opts = Object.assign({
     json: true,
-    key: env.RBTV_KEY,
-    secret: env.RBTV_SECRET
+    key: process.env.RBTV_KEY,
+    secret: process.env.RBTV_SECRET
   }, opts);
 
   opts.headers = Object.assign({

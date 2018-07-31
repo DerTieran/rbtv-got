@@ -6,17 +6,17 @@ const key = process.env.RBTV_KEY;
 const secret = process.env.RBTV_SECRET;
 
 test('default', async t => {
-  const podcasts = (await m('podcast')).body.podcasts;
+  const {podcasts} = (await m('podcast')).body;
   t.true(Array.isArray(podcasts));
 });
 
 test('full path', async t => {
-  const podcasts = (await m('http://api.rocketmgmt.de/podcast')).body.podcasts;
+  const {podcasts} = (await m('http://api.rocketmgmt.de/podcast')).body;
   t.true(Array.isArray(podcasts));
 });
 
 test('accepts options', async t => {
-  const podcasts = (await m('podcast', {})).body.podcasts;
+  const {podcasts} = (await m('podcast', {})).body;
   t.true(Array.isArray(podcasts));
 });
 
@@ -33,6 +33,6 @@ test('key/secret option', async t => {
 });
 
 test('stream interface', async t => {
-  const podcasts = JSON.parse(await getStream(m.stream('podcast'))).podcasts;
+  const {podcasts} = JSON.parse(await getStream(m.stream('podcast')));
   t.true(Array.isArray(podcasts));
 });
