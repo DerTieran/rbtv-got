@@ -5,7 +5,7 @@
 ## Install
 
 ```
-$ npm install --save rbtv-got
+$ npm install rbtv-got
 ```
 
 ## Usage
@@ -14,17 +14,14 @@ Instead of:
 
 ```js
 const got = require('got');
-const key = 'foo';
-const secret = 'bar';
-
-const wsse = 'create wsse header from key/secret here'
+const wsse = require('unicorn-wsse');
 
 got('http://api.rocketmgmt.de/podcast', {
   json: true,
   headers: {
-    'authorization': 'WSSE profile="UsernameToken"',
-    'x-wsse': wsse
-  }
+    authorization: 'WSSE profile="UsernameToken"',
+    'x-wsse': wsse({ key: 'foo', secret: 'bar' }),
+  },
 }).then(res => {
   console.log(res.body.podcasts);
   //=> [...]
@@ -36,23 +33,11 @@ You can do:
 ```js
 const rbtvGot = require('rbtv-got');
 
-rbtvGot('podcast', {key: 'foo', secret: 'bar'}).then(res => {
+rbtvGot('podcast', { key: 'foo', secret: 'bar' }).then(res => {
   console.log(res.body.podcasts);
   //=> [...]
 });
 ```
-
-Or:
-
-```js
-const rbtvGot = require('rbtv-got');
-
-rbtvGot('http://api.rocketmgmt.de/podcast', {key: 'foo', secret: 'bar'}).then(res => {
-  console.log(res.body.podcasts);
-  //=> [...]
-});
-```
-
 
 ## API
 
