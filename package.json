@@ -35,7 +35,7 @@
   "devDependencies": {
     "ava": "^0.25.0",
     "get-stream": "^3.0.0",
-    "xo": "^0.21.1"
+    "xo": "^0.20.3"
   },
   "xo": {
     "space": true,
