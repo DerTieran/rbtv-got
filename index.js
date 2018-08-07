@@ -15,7 +15,7 @@ const wsse = options => {
   delete options.secret;
 
   if (key && secret) {
-    const created = new Date();
+    const created = new Date().toISOString();
     const nonce = `${created}${crypto.randomBytes(36).toString('hex')}`;
     const sha = crypto
       .createHash('sha1')
