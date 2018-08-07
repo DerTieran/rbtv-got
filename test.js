@@ -16,7 +16,7 @@ test('full path', async t => {
 });
 
 test('accepts options', async t => {
-  const {podcasts} = (await m('podcast', {})).body;
+  const {podcasts} = (await m('podcast', {key, secret})).body;
   t.true(Array.isArray(podcasts));
 });
 
