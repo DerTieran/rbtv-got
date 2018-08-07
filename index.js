@@ -2,63 +2,32 @@
 
 const crypto = require('crypto');
 const got = require('got');
+const pkg = require('./package.json');
 
 const encodeBase64 = string => Buffer.from(string).toString('base64');
-const wsse = (key, secret) => {
-  const created = new Date();
-  const nonce = `${created}${crypto.randomBytes(36).toString('hex')}`;
-  const sha = crypto.createHash('sha1').update(`${nonce}${created}${secret}`).digest('hex');
+const wsse = options => {
+  const key = options.key || process.env.RBTV_KEY;
+  const secret = options.secret || process.env.RBTV_SECRET;
 
-  return `UsernameToken Username="${key}", PasswordDigest="${encodeBase64(sha)}", Nonce="${encodeBase64(nonce)}", Created="${created}"`;
+  if (key && secret) {
+    const created = new Date();
+    const nonce = `${created}${crypto.randomBytes(36).toString('hex')}`;
+    const sha = crypto
+      .createHash('sha1')
+      .update(`${nonce}${created}${secret}`)
+      .digest('hex');
+    options.headers['x-wsse'] = `UsernameToken Username="${key}", PasswordDigest="${encodeBase64(
+      sha
+    )}", Nonce="${encodeBase64(nonce)}", Created="${created}"`;
+  }
 };
 
-const rbtvGot = function (path, opts) {
-  if (typeof path !== 'string') {
-    return Promise.reject(new TypeError(`Expected \`path\` to be a string, got ${typeof path}`));
-  }
-
-  opts = Object.assign({
-    json: true,
-    key: process.env.RBTV_KEY,
-    secret: process.env.RBTV_SECRET
-  }, opts);
-
-  opts.headers = Object.assign({
+module.exports = got.extend({
+  json: true,
+  baseUrl: 'http://api.rocketmgmt.de',
+  headers: {
     authorization: 'WSSE profile="UsernameToken"',
-    'user-agent': 'https://github.com/DerTieran/rbtv-got'
-  }, opts.headers);
-
-  if (opts.key && opts.secret) {
-    opts.headers['x-wsse'] = wsse(opts.key, opts.secret);
-  }
-
-  const endpoint = 'http://api.rocketmgmt.de/';
-  const url = /^https?/.test(path) ? path : endpoint + path.replace(/^\/?/, '');
-
-  if (opts.stream) {
-    return got.stream(url, opts);
-  }
-
-  return got(url, opts);
-};
-
-rbtvGot.stream = (path, opts) => rbtvGot(path, Object.assign({}, opts, {
-  json: false,
-  stream: true
-}));
-
-const methods = [
-  'get',
-  'post',
-  'put',
-  'patch',
-  'head',
-  'delete'
-];
-
-methods.forEach(method => {
-  rbtvGot[method] = (path, opts) => rbtvGot(path, Object.assign({}, opts, {method}));
-  rbtvGot.stream[method] = (path, opts) => rbtvGot.stream(path, Object.assign({}, opts, {method}));
+    'user-agent': `${pkg.name}@${pkg.version} (${pkg.homepage})`
+  },
+  hooks: {beforeRequest: [wsse]}
 });
-
-module.exports = rbtvGot;
