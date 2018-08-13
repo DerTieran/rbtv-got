@@ -5,6 +5,7 @@
   "license": "MIT",
   "repository": "DerTieran/rbtv-got",
   "author": "Philipp Beck <dertieran@gmail.com>",
+  "homepage": "https://github.com/DerTieran/rbtv-got#readme",
   "engines": {
     "node": ">=8.6"
   },
